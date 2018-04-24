@@ -1,0 +1,157 @@
+Total before late penalty: [59/65]
+
+NOTE: in the marking report something left blank (e.g.  [ /6]) typically means
+that you got full marks for that item. 
+Bonus  [/3]
+
+CLIENT - FUNCTIONALITY: [35/40]
+
+0) Working makefile produces the CSftp.jar file        [/2]
+  
+1) Command Argument processing                             [3/4]
+    - Accepts server names in both IP and 
+       domain name format [/1]
+    - Processes port number and uses it [/1]
+    - Reports usage error if too many or too few arguments [0/1]
+    - If control connection fails to open reports error 0xFFFC [/1]
+
+2) features                                           [/2]
+     - reports error 0x002 if too many or too few parameters [/1]
+       sends the FEAT command (assuming the control connection is open)
+     - prints the response(s) and reprompts when all of the
+       response has been printed [/1]
+
+3) user command                                           [/3]
+     - reports error 0x002 if too many or too few parameters [/1]
+     - Sends USER command to server, processes response [/2]
+
+4) pw command                                             [/3]
+     - reports error 0x002 if too many or too few parameters [/1]
+     - Sends PASS command to server, process response [/2]
+
+5) quit command                                          [/2]
+     - Sends QUIT on the control connection. [/1]
+     - Exits, ideally closing connections first [/1]
+
+6) cd command                                            [/3]
+     - reports error 0x002 if too many or too few parameters [/1]
+     - sends CWD command, processes the response [/2]
+
+7) get command                                           [7/9]
+    - command rejected with 0x002 error if improper number of arguments [/1]
+    - Sends PASV and opens connection specified in response [/1]
+    - System designed to ensure server is in binary mode [/1]
+    - Sends RETR [/1]
+    - Can handle error response on nonexistent file [/1]
+    - Can deal with 
+      - local file open failure [0/1]
+      - failure on remote side, unexpected closure of data channel
+        (should close the data connection) [0/1]
+    - actual transfer of file data [0/1]
+    - binary files are properly transferred
+      (sha256sum value eb1c89ce834444da0362a36845fe24ac89841ea0abfc0caa768d9a901767daf0) [1/1]
+
+8) dir command                                           [3/4]
+    - Sends PASV and opens connection specified in response [/1]
+    - Can handle error response or connection failure [/1]
+    - Sends LIST and can deal with
+      - failure on remote side [0/1]
+        (should close the data connection)
+    - actual transfer of directory listing is correct [/1]
+
+9) format of output conforms to that specified in assignment    [/5]
+   - in particular lines are identified with --> and <-- [/1]
+   - Only data from the control connection prints the <--, printed
+     data on the data connection does not contain <--  [/1]
+   - the contents of the data connection are only printed for the dir command, get does not print what is sent or 
+     received on the data connection. [/2]
+   - Does not print 0x001 error when empty and '#' lines are used [/1]
+
+10) Error processing                                        [1/2]
+   - handles unexpected closure of control connection [0/1]
+   - handles unexpected EOF when reading command lines [/1]
+
+
+11) Parameters: properly handles multiple spaces or tabs    [/2]
+
+---------------------------------------
+Interaction with other FTP servers: [0/16]
+
+
+12) Interaction with ftp.cisco.com              [8/8]
+    - anonymous login               [/1] 
+    - password                      [/1] 
+    - dir                           [/1]
+    - cd into pub/mibs/traps        [/1]
+    - get traps.tar.gz              [/1]
+      sha256 value is 6a88876bf625fec5ec2e2d0b1d0aadd1249e95e3317cb4521ea31e8aae757fd4 *traps.tar.gz [/1]
+    - wait 60 seconds and quit      [/2]
+
+13) Interaction with ftp.dell.com                [4/8]
+
+      - anonymous login                 [/1] 
+      - password                 [/1] 
+      - cd into directory fixes        [/1] 
+      - retrieve file viewmtr.exe      [ /1]
+        (note assignment requires all file
+         transfers to be in binary mode) 
+  The sha256 value is: 9e0ebe14d9710625f503681872b719bbcd9a7cf075779da5eaa03f6c6d3ae9bd  [ /1]
+      - dir                            [/1]
+       
+      - cd .. followed by dir           [/1] 
+      - quit                            [/1]
+
+---------------------
+Broad Marking Criteria :                     [/9] 
+See the assignment section on Canvas for a description of the broad marking 
+criteria and what we were looking for. Note: this criteria was made available
+at the same time as the assignment description. 
+
+     Readability        [/3]
+     Code Documentation [/3]
+     Code Quality       [/3]
+
+
+   
+
+MARKER'S ADDITIONAL COMMENTS:
+
+
+----------- Non Functional Criteria
+
+Readability
+
+       3 marks - Code is "clean", understandable and well organized,
+        with no issues.  
+       2 marks - There may be minor issues with
+        consistency of indentation and use of white space. variable
+        naming or general organization. Although annoying, this does
+        not have a major impact on readability.  
+       1 mark - There are major issues with indentation, whitespace,
+        variable naming 0 marks - There are major problems across
+        multiple categories with respect to readability  
+
+Documenting your code
+
+     3 marks  - Code is well and completely commented    
+
+     2 marks - One or two places could benefit from some additional
+               comments to add clarity to what is being done.
+     
+     1 mark - Multiple locations where sections of code are
+              uncommented or comments aren't helpful 
+
+      0 marks - Few or no helpful comments
+
+Code Quality
+
+     3 marks  - Uniformly good choices of algorithms and data
+                structures across all aspects of the solution
+
+     2 marks - Good choice of algorithms or data structures except
+               for 1 or 2 situations where some improvement is possible
+
+     1 mark - Poor algorithms or data structure choice in multiple
+              situations and major improvement is possible.
+
+     0 marks - Consistently poor algorithm and data structure choices.
